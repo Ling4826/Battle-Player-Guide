@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sabotage Battle Guide</title>
+<style>
+body{background:#d4d4d4;color:#000;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.4;margin:0;padding:16px}
+.page{max-width:720px;margin:0 auto;background:#e8e8e8;border:1px solid #555;padding:14px 18px}
+h1{font-size:24px;margin:0 0 8px;border-bottom:2px solid #000;padding-bottom:4px}
+h2{font-size:18px;margin:20px 0 6px;background:#333;color:#ddd;padding:3px 8px}
+h3{font-size:15px;margin:12px 0 2px}
+p{margin:4px 0}
+ul{margin:4px 0;padding-left:22px}
+table{border-collapse:collapse;width:100%;margin:6px 0}
+td,th{border:1px solid #444;padding:4px 8px;text-align:left;vertical-align:top}
+th{background:#bbb}
+.small{font-size:12px;color:#444}
+button{font:inherit;background:#bbb;border:2px outset #999;padding:3px 10px;cursor:pointer;color:#000}
+.box{position:relative;overflow:hidden;background:#222;color:#ccc;font:13px/1.4 Consolas,monospace;padding:8px;min-height:60px}
+.box .fx{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none}
+.box.blur .txt{filter:blur(5px)}
+.box.shake .txt{animation:sh .12s infinite}
+.box.flip .txt{transform:rotate(180deg)}
+.box.flash .fx{background:#fff;animation:fl 3s ease-out forwards}
+@keyframes sh{0%{transform:translate(2px,1px)}25%{transform:translate(-2px,-2px)}50%{transform:translate(1px,2px)}75%{transform:translate(-1px,-1px)}100%{transform:translate(2px,1px)}}
+@keyframes fl{0%,20%{opacity:1}100%{opacity:0}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>Sabotage in Battle - Player Guide</h1>
+<p>CODE BATTLE, 7 Oct 2026. In 1v1 and 3v3 matches a team can spend sabotages to disrupt the other team's screen or code.</p>
+
+<h2>Rules</h2>
+<ul>
+<li>Battle mode only. Competitions (Score / ICPC) have no sabotage.</li>
+<li>Each team starts with 2 sabotages (default) and gets +1 for every question it solves (default).</li>
+<li>Each use costs 1. At 0 you cannot use it until your team solves another question.</li>
+<li>The count is shared by the whole team (3v3: teammates use the same pool).</li>
+<li>The effect hits every player on the other team at the same time.</li>
+<li>Cannot be used after the match ends.</li>
+<li>The organizer can change the numbers or turn sabotage off. If it is off, the sabotage panel is hidden.</li>
+</ul>
+
+<h2>The five sabotages</h2>
+<table>
+<tr><th>Name</th><th>What it does</th><th>Duration</th></tr>
+<tr><td>Blur</td><td>Opponent's screen is blurred. They can still type and click.</td><td>10 sec</td></tr>
+<tr><td>Flashbang</td><td>Screen turns white, then fades back.</td><td>10 sec</td></tr>
+<tr><td>Shake</td><td>Page shakes constantly.</td><td>10 sec</td></tr>
+<tr><td>Upside Down</td><td>Page is rotated 180 degrees. Still usable.</td><td>10 sec</td></tr>
+<tr><td>Delete</td><td>Removes one character from the other team's code.</td><td>Permanent</td></tr>
+</table>
+
+<h3>About Delete</h3>
+<ul>
+<li>Position is random among characters that are not whitespace and not in a comment.</li>
+<li>It hits the question that team edited most recently.</li>
+<li>In 3v3 the code is shared, so every teammate sees the same change.</li>
+<li>If the team has no code yet it misses, and the sabotage is still used up.</li>
+<li>The affected players see a notice for about 5 seconds.</li>
+<li>Counter: run the tests before every submit and re-read your code after a Delete notice.</li>
+</ul>
+
+<h2>Examples</h2>
+<p>Press a button to see roughly what the other team sees.</p>
+<table>
+<tr><td style="width:130px"><button type="button" data-fx="blur">Blur</button></td><td><div class="box" id="s-blur"><div class="txt">def solve(n):<br>&nbsp;&nbsp;return n * 2<br>print(solve(4))</div></div></td></tr>
+<tr><td><button type="button" data-fx="flash">Flashbang</button></td><td><div class="box" id="s-flash"><div class="txt">def solve(n):<br>&nbsp;&nbsp;return n * 2<br>print(solve(4))</div><div class="fx"></div></div></td></tr>
+<tr><td><button type="button" data-fx="shake">Shake</button></td><td><div class="box" id="s-shake"><div class="txt">def solve(n):<br>&nbsp;&nbsp;return n * 2<br>print(solve(4))</div></div></td></tr>
+<tr><td><button type="button" data-fx="flip">Upside Down</button></td><td><div class="box" id="s-flip"><div class="txt">def solve(n):<br>&nbsp;&nbsp;return n * 2<br>print(solve(4))</div></div></td></tr>
+<tr><td><button type="button" id="del-btn">Delete</button></td><td><div class="box"><div class="txt" id="del-txt">print(solve(4))</div></div><p class="small">One character disappears (shown for 3 seconds here; in a match it stays deleted).</p></td></tr>
+</table>
+
+<h2>How to use</h2>
+<ul>
+<li>Find the "Select Sabotage" panel next to the match screen. It shows how many you have left.</li>
+<li>Press the button for the effect you want.</li>
+<li>Your count drops by 1 and the other team is hit immediately.</li>
+<li>The number of sabotages the opponent has left is shown under their name.</li>
+</ul>
+
+<h2>Tips</h2>
+<ul>
+<li>Sabotages do not expire during a match. Unused ones are lost when the match ends.</li>
+<li>Delete is the strongest. Best used when the opponent is about to submit.</li>
+<li>Visual effects work best while the opponent is reading a new problem.</li>
+<li>In 3v3 agree in the team who presses the button, the pool is shared.</li>
+<li>Visual effects do not stop you from submitting. If you are hit, wait 10 seconds or keep typing.</li>
+</ul>
+
+<p class="small">Describes the system as deployed (v1.3.12). The numbers above are the system defaults; the organizer may use different values at the event.</p>
+
+</div>
+<script>
+document.querySelectorAll('button[data-fx]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var k=b.getAttribute('data-fx'),el=document.getElementById('s-'+k);
+    el.classList.remove(k);void el.offsetWidth;el.classList.add(k);
+    setTimeout(function(){el.classList.remove(k)},3000);
+  });
+});
+var orig='print(solve(4))',dt=document.getElementById('del-txt'),n=0;
+document.getElementById('del-btn').addEventListener('click',function(){
+  n++;var i=(n*5+3)%orig.length;if(/\s/.test(orig[i]))i=0;
+  dt.textContent=orig.slice(0,i)+orig.slice(i+1);
+  setTimeout(function(){dt.textContent=orig},3000);
+});
+</script>
+</body>
+</html>
